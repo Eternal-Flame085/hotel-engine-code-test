@@ -8,6 +8,8 @@ I was surprised with the amount of freedom given and that made me a bit nervous.
 
 What really threw me off for this quick test was the requirement of a searches table. I spent some time thinking how to integrate it better maybe even having a relationship with the anime table in some form but as it stands right now its more of a statistics table used to check the different uniq searches for anime and how many times they are used.
 
+Here is a link to MyAnimeList to make searching for some easier: https://myanimelist.net/topanime.php
+
 # Configuration
 1. Clone `git@github.com:Eternal-Flame085/hotel-engine-code-test.git`
 2. Run `Bundle install` to install gems and dependencies
@@ -118,6 +120,8 @@ Failed example response:
 
 By default the searches are ordered by the anime titles but can be ordered using the `sort` parameter. with sort specify the attribute to sort by followed by `asc` or `desc` example: `searched_title asc` or `searched_title desc`.
 Accepted `sort` attributes: `searched_title`, `searched_counter`
+
+can also be filtered by titles using `title_filter` so any search with similar titles get returned too. example: `My Hero Academia`, `My Hero Academia: Two Heroes`
 
 Successful example response:
 ```

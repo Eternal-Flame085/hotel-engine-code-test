@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graphql.anilist.co/
+    body:
+      encoding: UTF-8
+      string: '{"query":"query {\n                Media(search: \"anime_that_does_not_exists\",
+        type: ANIME) {\n                title {\n                    english\n                    native\n                }\n                description\n                episodes\n                season\n                seasonYear\n                averageScore\n                status\n                }\n            }"}'
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Sun, 13 Jun 2021 19:00:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, private
+      X-Ratelimit-Limit:
+      - '90'
+      X-Ratelimit-Remaining:
+      - '87'
+      Set-Cookie:
+      - laravel_session=vS9AnK9aYMWOgh5Wh5TNaDty1eYlIRW1A9inZINg; expires=Mon, 14-Jun-2021
+        07:00:15 GMT; Max-Age=43200; path=/; httponly
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - Authorization,Accept,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range
+      Access-Control-Expose-Headers:
+      - X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Content-Length,
+        Content-Range
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 0aa85806bd0000015a69ba2000000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=YJf1q8a5mXQbpt4%2BR5abOH9UP8DQwcq85Ux6pxHsDbRKQqi4gC5uCMuqFZjBdfUk4c8iSLvre7LU2IKaEdrwL522OR4wOCUUQkNzDRC9uVNrA2SpN1wVW4%2FOs1JiS9eyLvSlXqa8ODiO8Tw%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 65ed8f846e9e015a-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"errors":[{"message":"Not Found.","status":404,"locations":[{"line":2,"column":17}]}],"data":{"Media":null}}'
+  recorded_at: Sun, 13 Jun 2021 19:00:15 GMT
+recorded_with: VCR 6.0.0

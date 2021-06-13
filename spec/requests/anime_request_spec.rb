@@ -151,4 +151,26 @@ describe 'fetching anime already in db' do
         expect(error[:message]).to eq('Id not found')
         expect(error[:status]).to eq(404)
     end
+
+    it 'should delete anime in db by id' do
+        delete "/api/v1/anime/#{@classroom_of_the_elite.id}"
+
+        expect(response).to be_successful
+
+        confirmation = JSON.parse(response.body, symbolize_names: true)
+
+        expect(confirmation[:message]).to eq('Successfully deleted')
+        expect(confirmation[:status]).to eq(200)
+    end
+
+    it 'should return an error if id not found to delete' do
+        delete "/api/v1/anime/#{@classroom_of_the_elite.id + 1}"
+
+        expect(response.status).to eq(404)
+
+        confirmation = JSON.parse(response.body, symbolize_names: true)
+
+        expect(confirmation[:message]).to eq('Id not found')
+        expect(confirmation[:status]).to eq(404)
+    end
 end

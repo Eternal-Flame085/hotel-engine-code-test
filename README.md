@@ -15,6 +15,7 @@ What really threw me off for this quick test was the requirement of a searches t
 4. Run `Rails s` to start server on local host
 
 # Endpoints
+To test it out on a live use `https://hotel-engine-code-challenge.herokuapp.com/` as the URL in Postman or equivalent
 
 `GET /api/v1/anime` returns all the anime currently in the database
 

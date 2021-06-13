@@ -7,6 +7,10 @@ Rails.application.routes.draw do
       get 'anime/search', to: 'anime#search'
       get '/anime/:id', to: 'anime#show'
       delete '/anime/:id', to: 'anime#delete'
+
+      get '/searches', to: 'searched#index'
+      get 'searches/:id', to: 'searched#show'
+      delete '/searches/:id', to: 'searched#delete'
     end
   end
 end

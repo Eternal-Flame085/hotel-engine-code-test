@@ -1,4 +1,4 @@
-require 'rails-helpers'
+require 'rails_helper'
 
 describe 'Anilist api service' do
     it 'should return anime data based on search term' do
@@ -6,13 +6,12 @@ describe 'Anilist api service' do
             response = AnilistService.anime_search('The Rising of the Shield Hero')
 
             expect(response).to be_a(Hash)
-
             expect(response[:title]).to be_a(Hash)
-            expect(response[:title][english]).to be_a(String)
-            expect(response[:title][:native]).to be_a(Striing)
+            expect(response[:title][:english]).to be_a(String)
+            expect(response[:title][:native]).to be_a(String)
             expect(response[:episodes]).to be_a(Integer)
-            expect(response[:SeasonYear]).to be_a(Integer)
-            expect(response[:avarageScore]).to be_a(Integer)
+            expect(response[:seasonYear]).to be_a(Integer)
+            expect(response[:averageScore]).to be_a(Integer)
             expect(response[:season]).to be_a(String)
             expect(response[:status]).to be_a(String)
         end
@@ -23,7 +22,6 @@ describe 'Anilist api service' do
             response = AnilistService.anime_search('anime_that_does_not_exists')
 
             expect(response).to be_a(Hash)
-
             expect(response[:error]).to eq('Not Found.')
             expect(response[:status]).to eq(404)
         end

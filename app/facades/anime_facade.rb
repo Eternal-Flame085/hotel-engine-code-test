@@ -9,9 +9,9 @@ class AnimeFacade
             else
                 anime_list = anime_list.order(name_engl: :asc)
             end
-
-            anime_list.where(season_year: params[:year_filter]) if params[:year_filter].present?
-            anime_list.where('season ILIKE ?', "%#{params[:season_filter]}%") if params[:season_filter].present?
+            
+            anime_list = anime_list.where(season_year: params[:year_filter]) if params[:year_filter].present?
+            anime_list = anime_list.where('season ILIKE ?', "%#{params[:season_filter]}%") if params[:season_filter].present?
 
             return anime_list
         end

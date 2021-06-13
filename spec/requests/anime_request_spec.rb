@@ -67,6 +67,63 @@ describe 'fetching anime already in db' do
         expect(anime_list.last[:attributes][:score]).to eq(@your_name.score)
     end
 
+    it 'should return anime ordered by year in desc order' do
+        get '/api/v1/anime?sort=season_year desc'
+
+        expect(response).to be_successful
+        anime_list = JSON.parse(response.body, symbolize_names: true)[:data]
+
+        expect(anime_list.first[:attributes][:season_year]).to eq(@classroom_of_the_elite.season_year)
+        expect(anime_list.last[:attributes][:season_year]).to eq(@one_piece.season_year)
+    end
+
+    it 'should only return anime from a specified year' do
+        @my_hero_academia = Anime.create!(
+            name_engl: 'My Hero Academia',
+            name_native: 'ようこそ実力至上主義の教室へ',
+            description: 'My Hero Academia description',
+            status: 'FINISHED',
+            season: 'WINTER',
+            season_year: 2018,
+            episodes: 25,
+            score: 89,
+        )
+
+        get '/api/v1/anime?year_filter=2018'
+
+        expect(response).to be_successful
+        anime_list = JSON.parse(response.body, symbolize_names: true)[:data]
+
+        expect(anime_list.count).to eq(2)
+
+        expect(anime_list.first[:attributes][:name_engl]).to eq(@classroom_of_the_elite.name_engl)
+        expect(anime_list.last[:attributes][:name_engl]).to eq(@my_hero_academia.name_engl)
+    end
+
+    it 'should only return anime by a specified season' do
+        get '/api/v1/anime?season_filter=SUMMER'
+
+        expect(response).to be_successful
+        anime_list = JSON.parse(response.body, symbolize_names: true)[:data]
+
+        expect(anime_list.count).to eq(2)
+
+        expect(anime_list.first[:attributes][:name_engl]).to eq(@one_piece.name_engl)
+        expect(anime_list.last[:attributes][:name_engl]).to eq(@your_name.name_engl)
+    end
+
+    it 'should only return anime by a specified season workes with lowecase' do
+        get '/api/v1/anime?season_filter=summer'
+
+        expect(response).to be_successful
+        anime_list = JSON.parse(response.body, symbolize_names: true)[:data]
+
+        expect(anime_list.count).to eq(2)
+
+        expect(anime_list.first[:attributes][:name_engl]).to eq(@one_piece.name_engl)
+        expect(anime_list.last[:attributes][:name_engl]).to eq(@your_name.name_engl)
+    end
+
     it 'should return an anime from the db by id' do
         get "/api/v1/anime/#{@classroom_of_the_elite.id}"
 
@@ -82,5 +139,16 @@ describe 'fetching anime already in db' do
         expect(anime[:season_year]).to eq(@classroom_of_the_elite.season_year)
         expect(anime[:episodes]).to eq(@classroom_of_the_elite.episodes)
         expect(anime[:score]).to eq(@classroom_of_the_elite.score)
+    end
+
+    it 'shuld return an error message if anime id is not found' do
+        get "/api/v1/anime/#{@classroom_of_the_elite.id + 1}"
+
+        expect(response.status).to eq(404)
+
+        error = JSON.parse(response.body, symbolize_names: true)
+
+        expect(error[:message]).to eq('Id not found')
+        expect(error[:status]).to eq(404)
     end
 end

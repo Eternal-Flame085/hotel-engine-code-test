@@ -36,34 +36,41 @@ describe 'fetching anime already in db' do
         )
     end
 
-    it 'should return all anime in the db' do
+    it 'should return all anime in the db sorts by default by name_engl asc' do
         get '/api/v1/anime'
 
-        expect(response).to be_successfull
+        expect(response).to be_successful
+        anime_list = JSON.parse(response.body, symbolize_names: true)[:data]
 
-        anime_list = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+        expect(anime_list.first[:attributes][:name_engl]).to eq(@classroom_of_the_elite.name_engl)
+        expect(anime_list.first[:attributes][:name_native]).to eq(@classroom_of_the_elite.name_native)
+        expect(anime_list.first[:attributes][:description]).to eq(@classroom_of_the_elite.description)
+        expect(anime_list.first[:attributes][:season]).to eq(@classroom_of_the_elite.season)
+        expect(anime_list.first[:attributes][:season_year]).to eq(@classroom_of_the_elite.season_year)
+        expect(anime_list.first[:attributes][:episodes]).to eq(@classroom_of_the_elite.episodes)
+        expect(anime_list.first[:attributes][:score]).to eq(@classroom_of_the_elite.score)
 
-        expect(anime_list.first[:name_engl]).to eq(@your_name.name_engl)
-        expect(anime_list.first[:name_native]).to eq(@your_name.name_native)
-        expect(anime_list.first[:description]).to eq(@your_name.description)
-        expect(anime_list.first[:season]).to eq(@your_name.season)
-        expect(anime_list.first[:season_year]).to eq(@your_name.season_year)
-        expect(anime_list.first[:episodes]).to eq(@your_name.episodes)
-        expect(anime_list.first[:score]).to eq(@your_name.score)
-
-        expect(anime_list.last[:name_engl]).to eq(@classroom_of_the_elite.name_engl)
-        expect(anime_list.last[:name_native]).to eq(@classroom_of_the_elite.name_native)
-        expect(anime_list.last[:description]).to eq(@classroom_of_the_elite.description)
-        expect(anime_list.last[:season]).to eq(@classroom_of_the_elite.season)
-        expect(anime_list.last[:season_year]).to eq(@classroom_of_the_elite.season_year)
-        expect(anime_list.last[:episodes]).to eq(@classroom_of_the_elite.episodes)
-        expect(anime_list.last[:score]).to eq(@classroom_of_the_elite.score)
+        expect(anime_list[1][:attributes][:name_engl]).to eq(@one_piece.name_engl)
+        expect(anime_list[1][:attributes][:name_native]).to eq(@one_piece.name_native)
+        expect(anime_list[1][:attributes][:description]).to eq(@one_piece.description)
+        expect(anime_list[1][:attributes][:season]).to eq(@one_piece.season)
+        expect(anime_list[1][:attributes][:season_year]).to eq(@one_piece.season_year)
+        expect(anime_list[1][:attributes][:episodes]).to eq(@one_piece.episodes)
+        expect(anime_list[1][:attributes][:score]).to eq(@one_piece.score)
+        
+        expect(anime_list.last[:attributes][:name_engl]).to eq(@your_name.name_engl)
+        expect(anime_list.last[:attributes][:name_native]).to eq(@your_name.name_native)
+        expect(anime_list.last[:attributes][:description]).to eq(@your_name.description)
+        expect(anime_list.last[:attributes][:season]).to eq(@your_name.season)
+        expect(anime_list.last[:attributes][:season_year]).to eq(@your_name.season_year)
+        expect(anime_list.last[:attributes][:episodes]).to eq(@your_name.episodes)
+        expect(anime_list.last[:attributes][:score]).to eq(@your_name.score)
     end
 
     it 'should return an anime from the db by id' do
         get "/api/v1/anime/#{@classroom_of_the_elite.id}"
 
-        expect(response).to be_successfull
+        expect(response).to be_successful
 
         anime = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
 

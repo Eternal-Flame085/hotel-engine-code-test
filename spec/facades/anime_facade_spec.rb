@@ -46,4 +46,23 @@ describe 'anime facade' do
             expect(anime.id).to eq(shield_hero.id)
         end
     end
+
+    it 'anime_search should return Anime object from db if it exists with no anilist api call' do
+        @my_hero_academia = Anime.create!(
+            name_engl: 'My Hero Academia',
+            name_native: 'ようこそ実力至上主義の教室へ',
+            description: 'My Hero Academia description',
+            status: 'FINISHED',
+            season: 'WINTER',
+            season_year: 2018,
+            episodes: 25,
+            score: 89,
+        )
+        expect(Anime.all.count).to eq(3)
+
+        anime = AnimeFacade.anime_search('My Hero Academia')
+        expect(Anime.all.count).to eq(3)
+
+        expect(anime.id).to eq(@my_hero_academia.id)
+    end
 end

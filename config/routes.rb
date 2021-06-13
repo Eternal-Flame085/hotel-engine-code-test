@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/anime', to: 'anime#index'
       get '/anime/:id', to: 'anime#show'
+      delete '/anime/:id', to: 'anime#delete'
     end
   end
 end

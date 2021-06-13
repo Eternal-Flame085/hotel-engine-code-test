@@ -69,4 +69,30 @@ describe 'Fetching data from searhes table' do
         expect(error[:message]).to eq("Id not found")
         expect(error[:status]).to eq(404)
     end
+
+    it 'should add 1 to the searched counter if title has been searched before' do
+        VCR.use_cassette('classroom_of_the_elite') do
+            expect(@classroom_of_the_elite.searched_counter).to eq(3)
+
+            get '/api/v1/anime/search?anime_title=Classroom of the Elite'
+
+            expect(response).to be_successful
+            @classroom_of_the_elite.reload
+            expect(@classroom_of_the_elite.searched_counter).to eq(4)
+        end
+    end
+
+    it 'should create a a new searched table row defaulted to 1 if search not in db' do
+        VCR.use_cassette('the_rising_of_the_shield_hero') do
+            expect(Search.all.count).to eq(2)
+            get '/api/v1/anime/search?anime_title=The Rising of the Shield Hero'
+
+            expect(response).to be_successful
+            expect(Search.all.count).to eq(3)
+
+            search = Search.last
+            expect(search.searched_title).to eq("The Rising of the Shield Hero")
+            expect(search.searched_counter).to eq(1)
+        end
+    end
 end

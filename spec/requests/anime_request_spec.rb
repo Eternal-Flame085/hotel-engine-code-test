@@ -173,4 +173,50 @@ describe 'fetching anime already in db' do
         expect(confirmation[:message]).to eq('Id not found')
         expect(confirmation[:status]).to eq(404)
     end
+
+    it 'should the anime that was searched for by api call' do
+        VCR.use_cassette('the_rising_of_the_shield_hero') do
+
+            shield_hero_info = {:name_engl=>"The Rising of the Shield Hero",
+                :name_native=>"盾の勇者の成り上がり",
+                :description=>
+                 "Naofumi Iwatani, an uncharismatic Otaku who spends his days on games and manga, suddenly finds himself summoned to a parallel universe! He discovers he is one of four heroes equipped with legendary weapons and tasked with saving the world from its prophesied destruction. As the Shield Hero, the weakest of the heroes, all is not as it seems. Naofumi is soon alone, penniless, and betrayed. With no one to turn to, and nowhere to run, he is left with only his shield. Now, Naofumi must rise to become the legendary Shield Hero and save the world!<br><br>\n\n\n<i>The first episode was pre-aired on December 27th, 2018. Regular broadcast began on January 9th, 2019.</i>\n<br><br>\n<i>Note: The first episode aired with a runtime of ~47 minutes as opposed to the standard 24 minute long episode.</i>",
+                :episodes=>25,
+                :season=>"WINTER",
+                :season_year=>2019,
+                :status=>"FINISHED",
+                :score=>78
+            }
+
+            expect(Anime.all.count).to eq(3)
+
+            get "/api/v1/anime/search?anime_title=The Rising of the Shield Hero"
+            expect(Anime.all.count).to eq(4)
+
+            expect(response).to be_successful
+
+            anime = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+            
+            expect(anime[:name_engl]).to eq(shield_hero_info[:name_engl])
+            expect(anime[:name_native]).to eq(shield_hero_info[:name_native])
+            expect(anime[:description]).to eq(shield_hero_info[:description])
+            expect(anime[:episodes]).to eq(shield_hero_info[:episodes])
+            expect(anime[:season]).to eq(shield_hero_info[:season])
+            expect(anime[:season_year]).to eq(shield_hero_info[:season_year])
+            expect(anime[:status]).to eq(shield_hero_info[:status])
+            expect(anime[:score]).to eq(shield_hero_info[:score])
+        end
+    end
+
+    it 'should return errorif not found' do
+        VCR.use_cassette('not_found') do
+            get "/api/v1/anime/search?anime_title=anime_that_does_not_exists"
+
+            expect(response.status).to eq(404)
+
+            error = JSON.parse(response.body, symbolize_names: true)
+            
+            expect(error[:error]).to eq('Not Found.')
+        end
+    end
 end

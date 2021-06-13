@@ -17,6 +17,12 @@ class AnimeFacade
         end
 
         def anime_search(anime_title)
+            if search_found = Search.find_by(searched_title: anime_title)
+                search_found.update(searched_counter: (search_found.searched_counter += 1))
+            else
+                Search.create(searched_title: anime_title)
+            end
+
             #checks if anime exists in db first
             if anime = Anime.find_by('name_engl ILIKE ?', "%#{anime_title}%")
                 return anime

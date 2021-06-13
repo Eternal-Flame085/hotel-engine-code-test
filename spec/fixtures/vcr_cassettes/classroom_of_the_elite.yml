@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graphql.anilist.co/
+    body:
+      encoding: UTF-8
+      string: '{"query":"query {\n                Media(search: \"Classroom of the
+        Elite\", type: ANIME) {\n                title {\n                    english\n                    native\n                }\n                description\n                episodes\n                season\n                seasonYear\n                averageScore\n                status\n                }\n            }"}'
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 13 Jun 2021 21:09:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, private
+      X-Ratelimit-Limit:
+      - '90'
+      X-Ratelimit-Remaining:
+      - '89'
+      Set-Cookie:
+      - laravel_session=20iXUQth5vOqFes0IBk6EseO3gZ4CXDVFXuFfEEE; expires=Mon, 14-Jun-2021
+        09:09:36 GMT; Max-Age=43200; path=/; httponly
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - Authorization,Accept,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range
+      Access-Control-Expose-Headers:
+      - X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Content-Length,
+        Content-Range
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 0aa8ce769f00000a02792e7000000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=vZpStTIESN4yFIcyP8PqHJ8HFXOV6b23nSiKN0o0ahEl9IIFCfDzOaPstVu2WZLH%2FAZtxEng0ZGX5fkDWvZ%2B9pc7y3oPjSY3QDe9paiH5QX0tdkRf9MW7bWve9ui8ts0Ui7pV%2B6uRB%2F%2FuBY%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 65ee4d043beb0a02-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":{"Media":{"title":{"english":"Classroom of the Elite","native":"\u3088\u3046\u3053\u305d\u5b9f\u529b\u81f3\u4e0a\u4e3b\u7fa9\u306e\u6559\u5ba4\u3078"},"description":"Koudo
+        Ikusei Senior High School is a leading school with state-of-the-art facilities.
+        The students there have the freedom to wear any hairstyle and bring any personal
+        effects they desire. Koudo Ikusei is like a utopia, but the truth is that
+        only the most superior students receive favorable treatment.<br><br>\n\nKiyotaka
+        Ayanokouji is a student of D-class, which is where the school dumps its \"inferior\"
+        students in order to ridicule them. For a certain reason, Kiyotaka was careless
+        on his entrance examination, and was put in D-class. After meeting Suzune
+        Horikita and Kikyou Kushida, two other students in his class, Kiyotaka''s
+        situation begins to change. <br><br>\n(Source: Anime News Network, edited)","episodes":12,"season":"SUMMER","seasonYear":2017,"averageScore":76,"status":"FINISHED"}}}'
+  recorded_at: Sun, 13 Jun 2021 21:09:36 GMT
+recorded_with: VCR 6.0.0
